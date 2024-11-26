@@ -25,11 +25,13 @@
 - **Descripción**: Muestra la versión de Docker instalada.
 ```shell
 docker version
+```
+
+###docker info
+- **Descripción**:  Proporciona información detallada sobre la configuración de Docker.
+```shell
 docker info
-Descripción: Proporciona información detallada sobre la configuración de Docker.
-shell
-Copiar código
-docker info
+```
 docker images
 Descripción: Lista todas las imágenes disponibles en el sistema local.
 shell
