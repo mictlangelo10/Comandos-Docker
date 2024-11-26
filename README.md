@@ -54,6 +54,16 @@ Elimina una imagen específica por su ID o nombre.
 docker rmi <id_imagen>
 ```
 
+- **Detener todos los contenedores en ejecución:**  
+```shell
+docker stop $(docker ps -q)
+```
+
+- **Eliminar todas las imágenes de Docker:**  
+```shell
+docker rmi $(docker images -q)
+```
+
 - **Limpiar recursos no utilizados (contenedores, imágenes, volúmenes y redes):**  
 ```shell
 docker system prune -a
@@ -76,25 +86,6 @@ Muestra los logs de salida de un contenedor.
 ```shell
 docker logs <nombre_o_id_contenedor>
 ```
-
----
-
-### Explicación del comando usado en el instrumento:
-
-El comando usado en el instrumento es:
-
-```shell
-docker compose -f stack-cronojobs.yaml up -d
-```
-
-- **docker compose:** Ejecuta Docker Compose, que se utiliza para definir y ejecutar aplicaciones multi-contenedor.
-- **-f stack-cronojobs.yaml:** Especifica el archivo de configuración a utilizar. En este caso, se llama `stack-cronojobs.yaml`.
-- **up:** Levanta los servicios definidos en el archivo YAML.
-- **-d:** Ejecuta los contenedores en segundo plano (modo "detached").
-
-**Descripción completa:** Este comando levanta todos los servicios definidos en el archivo `stack-cronojobs.yaml` en segundo plano. Es ideal para configurar aplicaciones complejas que involucren múltiples contenedores.
-
----
 
 ## Docker Compose
 
@@ -131,6 +122,25 @@ Ejemplo: Ejecutar tres instancias de un servicio llamado `web`.
 ```shell
 docker-compose up --scale web=3
 ```
+
+---
+
+---
+
+### Explicación del comando usado en el instrumento:
+
+El comando usado en el instrumento es:
+
+```shell
+docker compose -f stack-cronojobs.yaml up -d
+```
+
+- **docker compose:** Ejecuta Docker Compose, que se utiliza para definir y ejecutar aplicaciones multi-contenedor.
+- **-f stack-cronojobs.yaml:** Especifica el archivo de configuración a utilizar. En este caso, se llama `stack-cronojobs.yaml`.
+- **up:** Levanta los servicios definidos en el archivo YAML.
+- **-d:** Ejecuta los contenedores en segundo plano (modo "detached").
+
+**Descripción completa:** Este comando levanta todos los servicios definidos en el archivo `stack-cronojobs.yaml` en segundo plano. Es ideal para configurar aplicaciones complejas que involucren múltiples contenedores.
 
 ---
 
@@ -184,20 +194,3 @@ docker service rm <nombre_servicio>
 ```
 
 ---
-
-## Comandos Adicionales
-
-- **Detener todos los contenedores en ejecución:**  
-```shell
-docker stop $(docker ps -q)
-```
-
-- **Eliminar todos los contenedores:**  
-```shell
-docker rm $(docker ps -aq)
-```
-
-- **Eliminar todas las imágenes de Docker:**  
-```shell
-docker rmi $(docker images -q)
-```
