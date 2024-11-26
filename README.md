@@ -87,6 +87,38 @@ Muestra los logs de salida de un contenedor.
 docker logs <nombre_o_id_contenedor>
 ```
 
+- **Listar imágenes disponibles en el sistema:**  
+Muestra todas las imágenes almacenadas localmente en el sistema.  
+```shell
+docker images
+```
+
+- **Ver espacio utilizado por Docker:**  
+Muestra un resumen del espacio utilizado por imágenes, contenedores y volúmenes.  
+```shell
+docker system df
+```
+
+- **Reiniciar un contenedor:**  
+Detiene y luego inicia un contenedor detenido o en ejecución.  
+```shell
+docker restart <nombre_o_id_contenedor>
+```
+
+- **Conectar un contenedor a una red:**  
+Conecta un contenedor existente a una red específica.  
+```shell
+docker network connect <nombre_red> <nombre_o_id_contenedor>
+```
+
+- **Desconectar un contenedor de una red:**  
+Desconecta un contenedor de una red.  
+```shell
+docker network disconnect <nombre_red> <nombre_o_id_contenedor>
+```
+
+---
+
 ## Docker Compose
 
 ### Comandos básicos:
@@ -121,6 +153,24 @@ docker-compose build
 Ejemplo: Ejecutar tres instancias de un servicio llamado `web`.  
 ```shell
 docker-compose up --scale web=3
+```
+
+- **Ver el estado de los servicios definidos:**  
+Lista el estado de los servicios en un archivo `docker-compose.yml`.  
+```shell
+docker-compose ps
+```
+
+- **Actualizar servicios en ejecución:**  
+Aplica cambios en el archivo `docker-compose.yml` a los servicios en ejecución.  
+```shell
+docker-compose up --build
+```
+
+- **Ejecutar un comando en un servicio:**  
+Permite ejecutar comandos específicos en un servicio gestionado por Docker Compose.  
+```shell
+docker-compose exec <nombre_servicio> <comando>
 ```
 
 ---
@@ -191,4 +241,42 @@ Borra un servicio del clúster.
 docker service rm <nombre_servicio>
 ```
 
+- **Ver detalles de un servicio en Swarm:**  
+Muestra información detallada sobre un servicio específico en el clúster.  
+```shell
+docker service inspect <nombre_servicio>
+```
+
+- **Escalar un servicio en Swarm:**  
+Ajusta el número de réplicas de un servicio en el clúster.  
+```shell
+docker service scale <nombre_servicio>=<número_de_replicas>
+```
+
+- **Detener todos los servicios en Swarm:**  
+Elimina todos los servicios gestionados por Swarm.  
+```shell
+docker service rm $(docker service ls -q)
+```
+
 ---
+
+## Comandos para volúmenes:
+
+- **Listar volúmenes:**  
+Muestra todos los volúmenes creados en Docker.  
+```shell
+docker volume ls
+```
+
+- **Eliminar volúmenes no utilizados:**  
+Elimina todos los volúmenes no utilizados por contenedores.  
+```shell
+docker volume prune
+```
+
+- **Crear un volumen:**  
+Crea un nuevo volumen con un nombre específico.  
+```shell
+docker volume create <nombre_volumen>
+```
