@@ -77,17 +77,11 @@ Muestra los logs de salida de un contenedor.
 docker logs <nombre_o_id_contenedor>
 ```
 
-- **Eliminar todos los recursos de Docker:**  
-Limpia todos los contenedores, imágenes, redes y volúmenes no utilizados.  
-```shell
-docker system prune -a --volumes
-```
-
 ---
 
-### Explicación del comando de la imagen:
+### Explicación del comando usado en el instrumento:
 
-El comando visto en la imagen es:
+El comando usado en el instrumento es:
 
 ```shell
 docker compose -f stack-cronojobs.yaml up -d
@@ -192,11 +186,6 @@ docker service rm <nombre_servicio>
 ---
 
 ## Comandos Adicionales
-
-- **Eliminar todos los contenedores detenidos y las imágenes no utilizadas:**  
-```shell
-docker system prune -a
-```
 
 - **Detener todos los contenedores en ejecución:**  
 ```shell
