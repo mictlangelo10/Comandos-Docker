@@ -1,125 +1,214 @@
-# Docker Engine
+
+# Lista de Comandos Docker
 
 ## Índice
 1. [Docker Engine](#docker-engine)
-   - [docker version](#docker-version)
-   - [docker info](#docker-info)
-   - [docker images](#docker-images)
-   - [docker ps](#docker-ps)
-   - [docker run](#docker-run)
-   - [docker stop](#docker-stop)
-   - [docker start](#docker-start)
-   - [docker rm](#docker-rm)
-   - [docker rmi](#docker-rmi)
-   - [docker exec](#docker-exec)
-   - [docker logs](#docker-logs)
-   - [docker pull](#docker-pull)
-   - [docker push](#docker-push)
-   - [docker build](#docker-build)
-   - [docker-compose up](#docker-compose-up)
-   - [docker-compose down](#docker-compose-down)
+2. [Docker Compose](#docker-compose)
+3. [Docker Swarm](#docker-swarm)
 
 ---
 
-### docker version
-- **Descripción**: Muestra la versión de Docker instalada.
+## Docker Engine
+
+### Comandos básicos:
+
+- **Listar contenedores en ejecución:**  
+Muestra una lista de todos los contenedores que están corriendo actualmente.  
 ```shell
-docker version
+docker ps
 ```
 
-###docker info
-- **Descripción**:  Proporciona información detallada sobre la configuración de Docker.
+- **Listar todos los contenedores:**  
+Incluye tanto los contenedores en ejecución como los detenidos.  
 ```shell
-docker info
-```
-docker images
-Descripción: Lista todas las imágenes disponibles en el sistema local.
-shell
-Copiar código
-docker images
-docker ps
-Descripción: Muestra los contenedores que están corriendo actualmente.
-shell
-Copiar código
-docker ps
-Opciones:
--a: Lista todos los contenedores, incluidos los detenidos.
-shell
-Copiar código
 docker ps -a
-docker run
-Descripción: Crea y ejecuta un nuevo contenedor.
-shell
-Copiar código
-docker run <image_name>
-Ejemplo:
-shell
-Copiar código
-docker run -d -p 8080:80 nginx
-docker stop
-Descripción: Detiene un contenedor en ejecución.
-shell
-Copiar código
-docker stop <container_id>
-docker start
-Descripción: Inicia un contenedor detenido.
-shell
-Copiar código
-docker start <container_id>
-docker rm
-Descripción: Elimina un contenedor detenido.
-shell
-Copiar código
-docker rm <container_id>
-docker rmi
-Descripción: Elimina una imagen de Docker.
-shell
-Copiar código
-docker rmi <image_id>
-docker exec
-Descripción: Ejecuta comandos dentro de un contenedor en ejecución.
-shell
-Copiar código
-docker exec -it <container_id> <command>
-Ejemplo:
-shell
-Copiar código
-docker exec -it <container_id> bash
-docker logs
-Descripción: Muestra los registros de un contenedor.
-shell
-Copiar código
-docker logs <container_id>
-docker pull
-Descripción: Descarga una imagen desde Docker Hub.
-shell
-Copiar código
-docker pull <image_name>
-docker push
-Descripción: Sube una imagen al repositorio de Docker Hub.
-shell
-Copiar código
-docker push <image_name>
-docker build
-Descripción: Construye una imagen Docker desde un archivo Dockerfile.
-shell
-Copiar código
-docker build -t <image_name> .
+```
+
+- **Iniciar un contenedor detenido:**  
+Activa un contenedor previamente detenido.  
+```shell
+docker start <nombre_o_id_contenedor>
+```
+
+- **Detener un contenedor en ejecución:**  
+Finaliza un contenedor que se encuentra en ejecución.  
+```shell
+docker stop <nombre_o_id_contenedor>
+```
+
+- **Eliminar un contenedor:**  
+Borra un contenedor detenido del sistema.  
+```shell
+docker rm <nombre_o_id_contenedor>
+```
+
+- **Eliminar todos los contenedores:**  
+Elimina todos los contenedores detenidos.  
+```shell
+docker rm $(docker ps -aq)
+```
+
+- **Eliminar una imagen:**  
+Elimina una imagen específica por su ID o nombre.  
+```shell
+docker rmi <id_imagen>
+```
+
+- **Limpiar recursos no utilizados (contenedores, imágenes, volúmenes y redes):**  
+```shell
+docker system prune -a
+```
+
+- **Inspeccionar un contenedor:**  
+Proporciona información detallada en formato JSON sobre un contenedor.  
+```shell
+docker inspect <nombre_o_id_contenedor>
+```
+
+- **Ver estadísticas de uso de recursos de contenedores:**  
+Muestra datos en tiempo real de CPU, memoria y red de los contenedores.  
+```shell
+docker stats
+```
+
+- **Ver los logs de un contenedor:**  
+Muestra los logs de salida de un contenedor.  
+```shell
+docker logs <nombre_o_id_contenedor>
+```
+
+- **Eliminar todos los recursos de Docker:**  
+Limpia todos los contenedores, imágenes, redes y volúmenes no utilizados.  
+```shell
+docker system prune -a --volumes
+```
+
+---
+
+### Explicación del comando de la imagen:
+
+El comando visto en la imagen es:
+
+```shell
+docker compose -f stack-cronojobs.yaml up -d
+```
+
+- **docker compose:** Ejecuta Docker Compose, que se utiliza para definir y ejecutar aplicaciones multi-contenedor.
+- **-f stack-cronojobs.yaml:** Especifica el archivo de configuración a utilizar. En este caso, se llama `stack-cronojobs.yaml`.
+- **up:** Levanta los servicios definidos en el archivo YAML.
+- **-d:** Ejecuta los contenedores en segundo plano (modo "detached").
+
+**Descripción completa:** Este comando levanta todos los servicios definidos en el archivo `stack-cronojobs.yaml` en segundo plano. Es ideal para configurar aplicaciones complejas que involucren múltiples contenedores.
+
+---
+
+## Docker Compose
+
+### Comandos básicos:
+
+- **Iniciar contenedores definidos en `docker-compose.yml`:**  
+Ejecuta los servicios descritos en el archivo de configuración por defecto (`docker-compose.yml`).  
+```shell
 docker-compose up
-Descripción: Inicia los servicios definidos en un archivo docker-compose.yml.
-shell
-Copiar código
-docker-compose up
+```
+
+- **Iniciar contenedores desde un archivo específico:**  
+```shell
+docker-compose -f <archivo.yml> up
+```
+
+- **Detener contenedores y servicios definidos:**  
+```shell
 docker-compose down
-Descripción: Detiene y elimina los servicios definidos en un archivo docker-compose.yml.
-shell
-Copiar código
-docker-compose down
-Combinación de comandos
-Ejemplo: Crear y correr un contenedor con Nginx, ver sus logs y detenerlo:
-shell
-Copiar código
-docker run -d -p 8080:80 nginx
-docker logs <container_id>
-docker stop <container_id>
-docker rm <container_id>
+```
+
+- **Recrear contenedores sin borrar volúmenes:**  
+```shell
+docker-compose up --force-recreate
+```
+
+- **Construir imágenes sin iniciar contenedores:**  
+```shell
+docker-compose build
+```
+
+- **Escalar servicios:**  
+Ejemplo: Ejecutar tres instancias de un servicio llamado `web`.  
+```shell
+docker-compose up --scale web=3
+```
+
+---
+
+## Docker Swarm
+
+### Comandos básicos:
+
+- **Inicializar Docker Swarm:**  
+Convierte el nodo actual en un nodo principal de un clúster Swarm.  
+```shell
+docker swarm init
+```
+
+- **Unirse a un clúster Swarm existente:**  
+```shell
+docker swarm join --token <token> <ip>:<puerto>
+```
+
+- **Listar nodos del clúster:**  
+```shell
+docker node ls
+```
+
+- **Salir del clúster Swarm:**  
+Elimina el nodo actual del clúster Swarm.  
+```shell
+docker swarm leave
+```
+
+- **Crear un servicio:**  
+Ejecuta un servicio gestionado por Swarm.  
+```shell
+docker service create --name <nombre_servicio> <imagen>
+```
+
+- **Listar servicios en el clúster:**  
+```shell
+docker service ls
+```
+
+- **Actualizar un servicio:**  
+Permite cambiar la configuración de un servicio existente.  
+```shell
+docker service update <opciones> <nombre_servicio>
+```
+
+- **Eliminar un servicio:**  
+Borra un servicio del clúster.  
+```shell
+docker service rm <nombre_servicio>
+```
+
+---
+
+## Comandos Adicionales
+
+- **Eliminar todos los contenedores detenidos y las imágenes no utilizadas:**  
+```shell
+docker system prune -a
+```
+
+- **Detener todos los contenedores en ejecución:**  
+```shell
+docker stop $(docker ps -q)
+```
+
+- **Eliminar todos los contenedores:**  
+```shell
+docker rm $(docker ps -aq)
+```
+
+- **Eliminar todas las imágenes de Docker:**  
+```shell
+docker rmi $(docker images -q)
+```
