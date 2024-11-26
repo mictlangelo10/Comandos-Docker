@@ -125,8 +125,6 @@ docker-compose up --scale web=3
 
 ---
 
----
-
 ### Explicación del comando usado en el instrumento:
 
 El comando usado en el instrumento es:
